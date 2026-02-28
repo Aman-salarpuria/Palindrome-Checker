@@ -1,68 +1,83 @@
 ````md
-# Use Case 5: Stack Based Palindrome Checker
+# Use Case 6: Queue + Stack Fairness Check
 
-## 📌 Overview
+## Overview
 
-This program checks whether a given string is a **palindrome** using a **Stack** data structure.
+This program checks whether a given string is a palindrome using two data structures:
 
-A **palindrome** is a word that reads the same forward and backward.
+- Queue (FIFO – First In First Out)
+- Stack (LIFO – Last In First Out)
 
-**Examples:**
-- `noon` 
-- `madam`
-- `hello`
+A palindrome is a word that reads the same forward and backward.
 
----
-
-## 🧠 Core Concept Used
-
-### Stack (LIFO Principle)
-
-A **Stack** follows the **LIFO (Last In, First Out)** principle.
-
-- The last element pushed into the stack is the first one removed.
-- This behavior naturally reverses the order of elements.
-
-We use this property to reverse the string and compare it with the original.
+Examples:
+- civic
+- level
+- noon
 
 ---
 
-## ⚙️ Step-by-Step Logic
+## Core Concept
 
-### Initialize the Input
+This implementation combines the behavior of two data structures:
+
+### Queue (FIFO)
+
+A Queue follows the First In First Out principle.
+The first character inserted is the first one removed.
+
+### Stack (LIFO)
+
+A Stack follows the Last In First Out principle.
+The last character inserted is the first one removed.
+
+By inserting characters into both structures and then removing them simultaneously, we compare:
+
+- The front character (from the queue)
+- The last character (from the stack)
+
+If they are always equal, the string is a palindrome.
+
+---
+
+## Step-by-Step Logic
+
+### 1. Define Input
+
 ```java
-String input = "noon";
+String input = "civic";
 ````
 
-We declare and initialize the string that needs to be checked.
+The string to validate is initialized.
 
 ---
 
-###  Create a Stack
+### 2. Create Data Structures
 
 ```java
+Queue<Character> queue = new LinkedList<>();
 Stack<Character> stack = new Stack<>();
 ```
 
-We create a stack to store each character of the string.
+* The queue stores characters in original order.
+* The stack stores characters in reverse order due to LIFO behavior.
 
 ---
 
-### Push Characters into the Stack
+### 3. Insert Characters
 
 ```java
 for (char c : input.toCharArray()) {
+    queue.add(c);
     stack.push(c);
 }
 ```
 
-Each character of the string is pushed into the stack.
-
-Because of LIFO behavior, the stack now holds the characters in reverse order internally.
+Each character is added to both the queue and the stack.
 
 ---
 
-### Assume It Is a Palindrome
+### 4. Assume It Is a Palindrome
 
 ```java
 boolean isPalindrome = true;
@@ -72,66 +87,61 @@ We initially assume the string is a palindrome.
 
 ---
 
-###  Compare by Popping
+### 5. Compare Characters
 
 ```java
-for (char c : input.toCharArray()) {
-    if (c != stack.pop()) {
+while (!queue.isEmpty()) {
+    char fromQueue = queue.remove();
+    char fromStack = stack.pop();
+
+    if (fromQueue != fromStack) {
         isPalindrome = false;
         break;
     }
 }
 ```
 
-* We iterate through the original string again.
-* Each character is compared with the character popped from the stack.
-* Since the stack pops in reverse order, this effectively compares:
-
-  * First character with last
-  * Second with second-last
-  * And so on
-
-If any mismatch occurs, it is not a palindrome.
+* Characters are removed from the queue (front).
+* Characters are popped from the stack (top).
+* If any pair does not match, the string is not a palindrome.
 
 ---
 
-### 6️⃣ Display the Result
+### 6. Display Result
 
 ```java
-if (isPalindrome) {
-    System.out.println(input + " is a Palindrome.");
-} else {
-    System.out.println(input + " is NOT a Palindrome.");
-}
+System.out.println("Input : " + input);
+System.out.println("Is Palindrome? : " + isPalindrome);
 ```
 
-The result is printed based on the comparison outcome.
+The program prints the input and whether it is a palindrome.
 
 ---
 
-## 🔍 Why Stack Works Here
+## Why This Approach Works
 
-The stack automatically reverses the string due to its LIFO nature.
+The queue preserves the original order of characters.
+The stack reverses the order of characters.
 
-Instead of manually reversing the string:
+Comparing both simultaneously performs a symmetric check:
 
-* We push characters
-* We pop them in reverse order
-* We compare with the original
+* First character vs last character
+* Second character vs second-last character
+* And so on
 
-This demonstrates how stack behavior maps directly to reversal logic.
-
----
-
-## 🏁 Time & Space Complexity
-
-* **Time Complexity:** O(n)
-
-  * One pass to push
-  * One pass to compare
-
-* **Space Complexity:** O(n)
-
-  * Stack stores all characters
+This demonstrates how FIFO and LIFO behaviors can be combined for symmetric comparison.
 
 ---
+
+## Time and Space Complexity
+
+Time Complexity: O(n)
+
+* One pass to insert
+* One pass to compare
+
+Space Complexity: O(n)
+
+* Queue stores n characters
+* Stack stores n characters
+```
