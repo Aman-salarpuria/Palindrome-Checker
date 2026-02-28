@@ -1,66 +1,48 @@
 ````md
-# Use Case 6: Queue + Stack Fairness Check
+# Use Case 7: Deque Based Optimized Palindrome Checker
 
 ## Overview
 
-This program checks whether a given string is a palindrome using two data structures:
-
-- Queue (FIFO – First In First Out)
-- Stack (LIFO – Last In First Out)
+This program checks whether a given string is a palindrome using a Deque (Double Ended Queue).
 
 A palindrome is a word that reads the same forward and backward.
 
-Examples:
-- civic
-- level
-- noon
+Example:
+- refer
 
 ---
 
 ## Core Concept
 
-This implementation combines the behavior of two data structures:
+A Deque allows insertion and removal of elements from both the front and rear.
 
-### Queue (FIFO)
+Methods used:
+- removeFirst()
+- removeLast()
 
-A Queue follows the First In First Out principle.
-The first character inserted is the first one removed.
-
-### Stack (LIFO)
-
-A Stack follows the Last In First Out principle.
-The last character inserted is the first one removed.
-
-By inserting characters into both structures and then removing them simultaneously, we compare:
-
-- The front character (from the queue)
-- The last character (from the stack)
-
-If they are always equal, the string is a palindrome.
+This enables direct comparison of the first and last characters without using separate data structures like Stack or Queue.
 
 ---
 
-## Step-by-Step Logic
+## Logic Flow
 
 ### 1. Define Input
 
 ```java
-String input = "civic";
+String input = "refer";
 ````
 
-The string to validate is initialized.
+The string to be validated is initialized.
 
 ---
 
-### 2. Create Data Structures
+### 2. Create Deque
 
 ```java
-Queue<Character> queue = new LinkedList<>();
-Stack<Character> stack = new Stack<>();
+Deque<Character> deque = new ArrayDeque<>();
 ```
 
-* The queue stores characters in original order.
-* The stack stores characters in reverse order due to LIFO behavior.
+A Deque is created to store characters.
 
 ---
 
@@ -68,80 +50,48 @@ Stack<Character> stack = new Stack<>();
 
 ```java
 for (char c : input.toCharArray()) {
-    queue.add(c);
-    stack.push(c);
+    deque.add(c);
 }
 ```
 
-Each character is added to both the queue and the stack.
+All characters are inserted into the deque.
 
 ---
 
-### 4. Assume It Is a Palindrome
+### 4. Compare Front and Rear
 
 ```java
-boolean isPalindrome = true;
-```
+while (deque.size() > 1) {
+    char first = deque.removeFirst();
+    char last = deque.removeLast();
 
-We initially assume the string is a palindrome.
-
----
-
-### 5. Compare Characters
-
-```java
-while (!queue.isEmpty()) {
-    char fromQueue = queue.remove();
-    char fromStack = stack.pop();
-
-    if (fromQueue != fromStack) {
+    if (first != last) {
         isPalindrome = false;
         break;
     }
 }
 ```
 
-* Characters are removed from the queue (front).
-* Characters are popped from the stack (top).
-* If any pair does not match, the string is not a palindrome.
+* Remove the first and last characters.
+* Compare them.
+* Continue until the deque has zero or one element left.
+
+If any pair does not match, the string is not a palindrome.
 
 ---
 
-### 6. Display Result
+## Why This Approach Is Optimized
 
-```java
-System.out.println("Input : " + input);
-System.out.println("Is Palindrome? : " + isPalindrome);
-```
-
-The program prints the input and whether it is a palindrome.
-
----
-
-## Why This Approach Works
-
-The queue preserves the original order of characters.
-The stack reverses the order of characters.
-
-Comparing both simultaneously performs a symmetric check:
-
-* First character vs last character
-* Second character vs second-last character
-* And so on
-
-This demonstrates how FIFO and LIFO behaviors can be combined for symmetric comparison.
+* No extra data structure for reversal
+* Direct front and rear access
+* Efficient symmetric comparison
 
 ---
 
 ## Time and Space Complexity
 
 Time Complexity: O(n)
-
-* One pass to insert
-* One pass to compare
-
 Space Complexity: O(n)
 
-* Queue stores n characters
-* Stack stores n characters
+```
 ```
