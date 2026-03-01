@@ -1,45 +1,56 @@
 /**
- * ===========================================================
- * MAIN CLASS - UseCase4PalindromeCheckerApp
- * ===========================================================
+ * ========================================================
+ * MAIN CLASS - UseCase9RecursivePalindrome
+ * ========================================================
  *
- * Use Case 4: Character Array Based Validation
+ * Use Case 9: Recursive Palindrome Checker
  *
  * Description:
- * This class validates a palindrome by converting
- * the string into a character array and comparing
- * characters using the two-pointer technique.
+ * This class validates a palindrome using recursion.
  *
- * At this stage, the application:
- * - Converts string to char array
- * - Uses start and end pointers
- * - Compares characters efficiently
- * - Displays the result
+ * Characters are compared from the outer positions
+ * moving inward using recursive calls.
  *
- * This reduces extra memory usage.
+ * The recursion stops when:
+ * - All characters are matched, or
+ * - A mismatch is found.
+ *
+ * This use case demonstrates divide-and-conquer
+ * logic using method recursion.
  *
  * @author Developer
- * @version 4.0
+ * @version 9.0
  */
+public class PalindromeChecker {
 
-
-
-import java.util.Scanner;
-public class PalindromeChecker{
+    /**
+     * Application entry point for UC9.
+     *
+     * @param args Command-line arguments
+     */
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String str=sc.nextLine();
-        char[] strc = str.toCharArray();
-        int n=str.length();
-        int flag=0;
-        for(int i=0;i<n;i++){
-            if(strc[i]==strc[n-1-i]){
-                continue;
-            }else{flag=1;}
+        String input = "madam";
+        boolean isPalindrome = check(input, 0, input.length() - 1);
+
+        System.out.println("Input  : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
+    }
+
+    /**
+     * Recursively checks whether a string is palindrome.
+     *
+     * @param s     Input string
+     * @param start Starting index
+     * @param end   Ending index
+     * @return true if palindrome, otherwise false
+     */
+    private static boolean check(String s, int start, int end) {
+        if (start >= end) {
+            return true;
         }
-        if(flag==0){
-            System.out.println("Its a Palindrome");
-        }else{System.out.println("its not a palindrome");
+        if (s.charAt(start) != s.charAt(end)) {
+            return false;
         }
-        ;}
+        return check(s, start + 1, end - 1);
+    }
 }

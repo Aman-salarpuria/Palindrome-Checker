@@ -1,18 +1,21 @@
 # Palindrome-Checker
-USE CASE 4
-usage of character array 
 
-# FLOW
-Accept user input using scanner.cc
+## Use Case 9: Recursive Palindrome Checker
 
-Convert String to character array using
+This use case validates whether a string is a palindrome using **recursion**.
 
-char[] charArray = str.toCharArray();
+### Flow
 
-Loop through character array and compare 
+- **Step 1**: Hardcode the input string as `"madam"`.
+- **Step 2**: Call a recursive `check(String s, int start, int end)` method.
+- **Step 3**: In each recursive call:
+  - Compare characters at `start` and `end`.
+  - If they differ, return `false`.
+  - If `start >= end`, return `true` (base case).
+- **Step 4**: Print the original input and the boolean result.
 
-i and n-1-i elements
+### Sample Output
 
-using a flag if no match then flag =1 else it stays 0
+Input  : madam  
+Is Palindrome? : true
 
-at the end if flag 0 number is palindrome
