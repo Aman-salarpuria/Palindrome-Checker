@@ -1,18 +1,30 @@
 # Palindrome-Checker
-USE CASE 4
-usage of character array 
 
-# FLOW
-Accept user input using scanner.cc
+## Use Case 10: Normalized Palindrome Validation
 
-Convert String to character array using
+This use case validates a palindrome after preprocessing the input string.
 
-char[] charArray = str.toCharArray();
+### Normalization Steps
 
-Loop through character array and compare 
+- **Remove spaces and symbols** using a regular expression.
+- **Convert to lowercase** to make comparison case-insensitive.
 
-i and n-1-i elements
+The normalization expression used is:
 
-using a flag if no match then flag =1 else it stays 0
+```java
+input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+```
 
-at the end if flag 0 number is palindrome
+### Algorithm
+
+- Normalize the input string.
+- Use a two-pointer loop from both ends towards the center:
+  - Compare characters at symmetric positions.
+  - If any pair does not match, it is not a palindrome.
+- Otherwise, it is a palindrome.
+
+### Sample Input and Output
+
+Input  : A man a plan a canal Panama  
+Is Palindrome? : true
+

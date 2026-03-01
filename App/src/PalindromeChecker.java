@@ -1,45 +1,48 @@
 /**
- * ===========================================================
- * MAIN CLASS - UseCase4PalindromeCheckerApp
- * ===========================================================
+ * ========================================================
+ * MAIN CLASS - UseCase10PalindromeCheckerApp
+ * ========================================================
  *
- * Use Case 4: Character Array Based Validation
+ * Use Case 10: Normalized Palindrome Validation
  *
  * Description:
- * This class validates a palindrome by converting
- * the string into a character array and comparing
- * characters using the two-pointer technique.
+ * This class validates a palindrome after preprocessing
+ * the input string.
  *
- * At this stage, the application:
- * - Converts string to char array
- * - Uses start and end pointers
- * - Compares characters efficiently
- * - Displays the result
+ * Normalization includes:
+ * - Removing spaces and symbols
+ * - Converting to lowercase
  *
- * This reduces extra memory usage.
+ * This ensures the palindrome check is logical rather
+ * than character-format dependent.
+ *
+ * Example:
+ * "A man a plan a canal Panama"
  *
  * @author Developer
- * @version 4.0
+ * @version 10.0
  */
+public class PalindromeChecker {
 
-
-
-import java.util.Scanner;
-public class PalindromeChecker{
+    /**
+     * Application entry point for UC10.
+     *
+     * @param args Command-line arguments
+     */
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String str=sc.nextLine();
-        char[] strc = str.toCharArray();
-        int n=str.length();
-        int flag=0;
-        for(int i=0;i<n;i++){
-            if(strc[i]==strc[n-1-i]){
-                continue;
-            }else{flag=1;}
+        String input = "A man a plan a canal Panama";
+
+        String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        boolean isPalindrome = true;
+        for (int i = 0; i < normalized.length() / 2; i++) {
+            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
         }
-        if(flag==0){
-            System.out.println("Its a Palindrome");
-        }else{System.out.println("its not a palindrome");
-        }
-        ;}
+
+        System.out.println("Input  : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
+    }
 }
